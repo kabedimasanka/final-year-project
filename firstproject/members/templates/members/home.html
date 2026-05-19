@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="hero">
+
+    <!-- CENTER TITLE -->
+    <div class="center-title">
+        <div class="tag">⚡ ENERGY MOBILITY PLATFORM</div>
+
+        <h1>Electric Bike Battery Swapping System</h1>
+
+        <p>
+            Instant energy exchange for modern electric mobility — fast, smart, and reliable.
+        </p>
+
+        <a href="{% url 'signup' %}" class="btn">Get Started</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- LEFT -->
+        <div class="left">
+            <h2>Why Choose Us?</h2>
+
+            <div class="card">
+                <h3>⚡ Ultra-Fast</h3>
+                <p>Swap battery in seconds.</p>
+            </div>
+
+            <div class="card">
+                <h3>📍 Smart Network</h3>
+                <p>Find stations easily.</p>
+            </div>
+
+            <div class="card">
+                <h3>🔒 Secure</h3>
+                <p>Safe automated system.</p>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+            <h2>Ride Without Limits</h2>
+
+            <p>
+                No charging delays. Just swap and go instantly.
+            </p>
+
+            <p>
+                Designed for modern electric mobility with reliability and speed.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* SAFE PAGE (NO CUT CONTENT) */
+html, body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #111;
+}
+
+/* MAIN LAYOUT */
+.hero {
+    min-height: 100vh;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* CENTER TITLE */
+.center-title {
+    text-align: center;
+}
+
+.tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #666;
+}
+
+.center-title h1 {
+    font-size: 44px;
+    margin: 10px 0;
+}
+
+.center-title p {
+    font-size: 16px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    padding: 12px 26px;
+    background: #111;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+/* CONTENT */
+.content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* LEFT + RIGHT */
+.left, .right {
+    flex: 1;
+}
+
+/* HEADINGS */
+.left h2, .right h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.card h3 {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+}
+
+.card p {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+/* RIGHT TEXT */
+.right p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+</style>
+
+{% endblock %}

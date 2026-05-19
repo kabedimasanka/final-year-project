@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="signup-page">
+
+    <!-- LEFT INFO PANEL -->
+    <div class="info-side">
+        <h1>Join the Future of Mobility</h1>
+        <p>
+            Create an account to access smart battery swapping stations, 
+            track your usage, and enjoy seamless electric bike mobility.
+        </p>
+
+        <ul>
+            <li>⚡ Instant battery swaps</li>
+            <li>📍 Smart station access</li>
+            <li>🔒 Secure user system</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT FORM PANEL -->
+    <div class="form-side">
+
+        <div class="form-card">
+            <h2>Create Account</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password1" placeholder="Password" required>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+
+                <button type="submit">Get Started</button>
+            </form>
+
+            <p class="login-text">
+                Already have an account? <a href="#">Login</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* PAGE LAYOUT */
+.signup-page {
+    height: 100vh;
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+/* LEFT SIDE */
+.info-side {
+    flex: 1;
+    background: #0f172a;
+    color: white;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-side h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.info-side p {
+    font-size: 16px;
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.info-side ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-side li {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+/* RIGHT SIDE */
+.form-side {
+    flex: 1;
+    background: #f5f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FORM CARD */
+.form-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-card h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* INPUTS */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #111;
+}
+
+/* BUTTON */
+button {
+    padding: 12px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #333;
+}
+
+/* LOGIN TEXT */
+.login-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.login-text a {
+    color: #111;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+</style>
+
+{% endblock %}

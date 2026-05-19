@@ -1,0 +1,14 @@
+{% extends 'base.html '%}
+{% block content %}
+{% load static %}
+<h1>BatteryOption</h1>
+<div class="column">
+    {% for item in battery_menu %}
+    <p>
+        <a href="{% url 'battery_menu' pk=item.pk%}">{{item.name}} </a>
+        <span class="battery_menu-price">{{item.price}}.00</span>
+    </p>
+    {% endfor %}
+</div>
+{% endblock %}
+{% endblock %}

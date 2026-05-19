@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <!-- LEFT BRAND SIDE -->
+    <div class="login-info">
+        <h1>Secure Access Portal</h1>
+
+        <p>
+            Sign in to your Electric Bike Battery Swapping dashboard to manage sessions,
+            locate nearby stations, and track your energy usage in real time.
+        </p>
+
+        <ul>
+            <li>⚡ Instant battery swap access</li>
+            <li>📍 Real-time station tracking</li>
+            <li>🔒 Secure user authentication</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT FORM SIDE -->
+    <div class="login-form-side">
+
+        <div class="login-card">
+
+            <h2>Account Login</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit">Sign In</button>
+            </form>
+
+            <p class="text">
+                Don't have an account?
+                <a href="{% url 'signup' %}">Create one</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* FULL PAGE */
+.login-page {
+    height: 100vh;
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+/* LEFT SIDE */
+.login-info {
+    flex: 1;
+    background: #0f172a;
+    color: white;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-info h1 {
+    font-size: 44px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.login-info p {
+    font-size: 16px;
+    color: #cbd5e1;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    max-width: 450px;
+}
+
+.login-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.login-info li {
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #e2e8f0;
+}
+
+/* RIGHT SIDE */
+.login-form-side {
+    flex: 1;
+    background: #f5f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 340px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #111;
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form p {
+    margin: 0;
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #111;
+}
+
+/* BUTTON */
+button {
+    padding: 12px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #333;
+}
+
+/* TEXT */
+.text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #555;
+}
+
+.text a {
+    color: #111;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.text a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+{% endblock %}

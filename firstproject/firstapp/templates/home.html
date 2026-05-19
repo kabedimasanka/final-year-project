@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="cover">
+    <div class="cover-content">
+        <h1>Swapping System</h1>
+        <p>Swap, Connect, and Exchange with Ease</p>
+
+        <a href="{% url 'signup' %}" class="btn">Get Started</a>
+    </div>
+</div>
+
+<style>
+.cover {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(to right, #141e30, #243b55);
+}
+
+.cover-content h1 {
+    font-size: 60px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.cover-content p {
+    font-size: 20px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: #00bcd4;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #0097a7;
+}
+</style>
+
+{% endblock %}

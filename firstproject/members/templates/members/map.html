@@ -1,0 +1,23 @@
+{% load static %}
+
+<script>
+    const lat = 0.3238;
+    const lng = 32.6015;
+
+    var map = L.map('map').setView([lat, lng], 16);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    var marker = L.marker([lat, lng]).addTo(map);
+
+    const imageUrl = "{% static 'images/my_map_picture.jpg' %}";
+
+    marker.bindPopup(`
+        <b>ISBAT University</b><br>
+        Main Campus, Kampala.<br>
+        <img src="${imageUrl}" style="width:150px; height:auto; margin-top:5px;">
+    `).openPopup();
+</script>
