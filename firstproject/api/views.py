@@ -1,11 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-@api_view(['POST'])
-def battery_swap(request):
-    
-    print(request.data)  # 👈 ADD IT HERE
+from members.models import Reservation
 
+
+@api_view(["POST"])
+def battery_swap(request):
     code = request.data.get("code")
 
     if not code:
@@ -14,16 +14,27 @@ def battery_swap(request):
     if not code.isdigit() or len(code) != 6:
         return Response({
             "status": "failed",
-            "message": "Code must be a 6-digit number"
+            "message": "Code must be a 6-digit number",
         })
 
-    if code == "123456":
+    reservation = Reservation.objects.filter(code=code).first()
+
+    if not reservation:
         return Response({
-            "status": "success",
-            "battery": "released"
+            "status": "failed",
+            "message": "Invalid code",
+        })
+
+    if reservation.status == "cancelled":
+        return Response({
+            "status": "failed",
+            "message": "Reservation is cancelled",
         })
 
     return Response({
-        "status": "failed",
-        "message": "Invalid code"
+        "status": "success",
+        "battery": "released",
+        "reservation_id": reservation.id,
+        "user_name": reservation.user_name,
+        "reservation_status": reservation.status,
     })
