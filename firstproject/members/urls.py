@@ -11,5 +11,6 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('home/', views.home, name='home'),
     path('reservation/', views.reservation_view, name='reservation'),
+    path('dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
     path("message/<int:pk>/", views.message_view, name="message"),
 ]

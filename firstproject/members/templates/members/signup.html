@@ -1,163 +1,141 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main class="auth-page">
+    <section class="auth-info">
+        <span>Join the network</span>
+        <h1>Create your energy mobility account.</h1>
+        <p>Reserve battery swaps, receive secure station codes, and keep your rides moving.</p>
+    </section>
 
-<div class="signup-page">
+    <section class="auth-card">
+        <h2>Create Account</h2>
 
-    <!-- LEFT INFO PANEL -->
-    <div class="info-side">
-        <h1>Join the Future of Mobility</h1>
-        <p>
-            Create an account to access smart battery swapping stations, 
-            track your usage, and enjoy seamless electric bike mobility.
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+            <button type="submit">Get Started</button>
+        </form>
+
+        <p class="text">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
         </p>
-
-        <ul>
-            <li>⚡ Instant battery swaps</li>
-            <li>📍 Smart station access</li>
-            <li>🔒 Secure user system</li>
-        </ul>
-    </div>
-
-    <!-- RIGHT FORM PANEL -->
-    <div class="form-side">
-
-        <div class="form-card">
-            <h2>Create Account</h2>
-
-            <form method="POST">
-                {% csrf_token %}
-
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password1" placeholder="Password" required>
-                <input type="password" name="password2" placeholder="Confirm Password" required>
-
-                <button type="submit">Get Started</button>
-            </form>
-
-            <p class="login-text">
-                Already have an account? <a href="#">Login</a>
-            </p>
-        </div>
-
-    </div>
-
-</div>
+    </section>
+</main>
 
 <style>
+    .auth-page {
+        min-height: calc(100vh - 76px);
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 28px;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 54px 24px;
+        align-items: center;
+    }
 
-/* PAGE LAYOUT */
-.signup-page {
-    height: 100vh;
-    display: flex;
-    font-family: Arial, sans-serif;
-}
+    .auth-info {
+        background: #063f2a;
+        color: white;
+        border-radius: 8px;
+        padding: 44px;
+        min-height: 430px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 5px solid #b8f05a;
+    }
 
-/* LEFT SIDE */
-.info-side {
-    flex: 1;
-    background: #0f172a;
-    color: white;
-    padding: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+    .auth-info span {
+        color: #b8f05a;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
 
-.info-side h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
-}
+    .auth-info h1 {
+        margin: 12px 0 16px;
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1.08;
+    }
 
-.info-side p {
-    font-size: 16px;
-    color: #cbd5e1;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
+    .auth-info p {
+        color: #d7eadc;
+        line-height: 1.7;
+        margin: 0;
+    }
 
-.info-side ul {
-    list-style: none;
-    padding: 0;
-}
+    .auth-card {
+        background: #ffffff;
+        border: 1px solid #d8eadf;
+        border-radius: 8px;
+        box-shadow: 0 22px 50px rgba(7, 74, 39, 0.12);
+        padding: 32px;
+    }
 
-.info-side li {
-    margin-bottom: 12px;
-    font-size: 16px;
-}
+    .auth-card h2 {
+        color: #063f2a;
+        margin: 0 0 22px;
+        text-align: center;
+    }
 
-/* RIGHT SIDE */
-.form-side {
-    flex: 1;
-    background: #f5f7fb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
 
-/* FORM CARD */
-.form-card {
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    width: 320px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+    input {
+        width: 100%;
+        padding: 12px 13px;
+        border: 1px solid #c9ded0;
+        border-radius: 8px;
+        outline: none;
+        font: inherit;
+    }
 
-.form-card h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
+    input:focus {
+        border-color: #078a3f;
+        box-shadow: 0 0 0 3px rgba(7, 138, 63, 0.12);
+    }
 
-/* INPUTS */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+    button {
+        min-height: 44px;
+        padding: 12px;
+        background: #078a3f;
+        color: white;
+        border: 0;
+        border-radius: 8px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+    }
 
-input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: 0.2s;
-}
+    button:hover {
+        background: #056d33;
+    }
 
-input:focus {
-    border-color: #111;
-}
+    .text {
+        color: #5a6b62;
+        margin: 18px 0 0;
+        text-align: center;
+        font-size: 14px;
+    }
 
-/* BUTTON */
-button {
-    padding: 12px;
-    background: #111;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    .text a {
+        color: #078a3f;
+        font-weight: 800;
+        text-decoration: none;
+    }
 
-button:hover {
-    background: #333;
-}
-
-/* LOGIN TEXT */
-.login-text {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 13px;
-}
-
-.login-text a {
-    color: #111;
-    font-weight: bold;
-    text-decoration: none;
-}
-
+    @media (max-width: 860px) {
+        .auth-page {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
-
 {% endblock %}

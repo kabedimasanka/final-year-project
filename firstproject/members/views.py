@@ -3,8 +3,14 @@ from django.contrib.auth import authenticate, login
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Reservation
+from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDate
+from django.utils import timezone
 from .models import Reservation, Location
+
+
+FIXED_RESERVATION_PRICE = 5000
 
 
 # HOME
@@ -70,8 +76,8 @@ def reservation_view(request):
         reservation = Reservation.objects.create(
             user_name=request.POST.get("user_name"),
             date=request.POST.get("date"),
-            price=request.POST.get("price"),
-            status=request.POST.get("status")
+            price=FIXED_RESERVATION_PRICE,
+            status=request.POST.get("status", "reserved")
         )
 
         # IMPORTANT: go to message page WITH ID
@@ -80,7 +86,8 @@ def reservation_view(request):
     reservations = Reservation.objects.all()
 
     return render(request, "members/reservation.html", {
-        "reservations": reservations
+        "reservations": reservations,
+        "fixed_price": FIXED_RESERVATION_PRICE,
     })
 
 
@@ -97,3 +104,42 @@ def message_view(request, pk):
 # MAP PAGE
 def map_view(request):
     return render(request, 'members/map.html')
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_dashboard_view(request):
+    today = timezone.localdate()
+    reservations = Reservation.objects.order_by("-date", "-id")
+
+    total_reservations = reservations.count()
+    total_revenue = reservations.aggregate(total=Sum("price"))["total"] or 0
+    valid_count = reservations.exclude(status="cancelled").filter(date__gte=today).count()
+    expired_count = total_reservations - valid_count
+
+    status_rows = list(
+        Reservation.objects.values("status")
+        .annotate(total=Count("id"))
+        .order_by("status")
+    )
+    daily_rows = list(
+        Reservation.objects.annotate(day=TruncDate("date"))
+        .values("day")
+        .annotate(total=Count("id"))
+        .order_by("day")
+    )
+
+    context = {
+        "reservations": reservations,
+        "today": today,
+        "total_reservations": total_reservations,
+        "total_revenue": total_revenue,
+        "valid_count": valid_count,
+        "expired_count": expired_count,
+        "status_labels": [row["status"].title() for row in status_rows],
+        "status_values": [row["total"] for row in status_rows],
+        "daily_labels": [row["day"].strftime("%b %d") for row in daily_rows],
+        "daily_values": [row["total"] for row in daily_rows],
+        "validity_labels": ["Valid", "Expired or Cancelled"],
+        "validity_values": [valid_count, expired_count],
+    }
+    return render(request, "members/admin_dashboard.html", context)

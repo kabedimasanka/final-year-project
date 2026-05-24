@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Swap Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: #f3f8f4;
+            color: #13231a;
+        }
+
+        .shell {
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: #073b25;
+            color: #ffffff;
+            padding: 22px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            display: block;
+            color: #9fe8b4;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .main {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .metric,
+        .panel {
+            background: #ffffff;
+            border: 1px solid #d8eadf;
+            border-radius: 8px;
+            box-shadow: 0 14px 30px rgba(9, 61, 32, 0.08);
+        }
+
+        .metric {
+            padding: 18px;
+        }
+
+        .metric span {
+            display: block;
+            color: #607267;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .metric strong {
+            color: #083b24;
+            display: block;
+            font-size: 28px;
+            margin-top: 6px;
+        }
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .chart-stack {
+            display: grid;
+            gap: 18px;
+        }
+
+        .panel {
+            padding: 18px;
+        }
+
+        .panel h2 {
+            color: #0a3f27;
+            font-size: 18px;
+            margin: 0 0 14px 0;
+        }
+
+        .chart-box {
+            height: 300px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        th,
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2eee7;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            color: #557064;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .code {
+            color: #078a3f;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .pill {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .valid {
+            background: #e6f8ea;
+            color: #087638;
+        }
+
+        .expired {
+            background: #fff2dd;
+            color: #9b5a00;
+        }
+
+        .status {
+            background: #edf6ff;
+            color: #1e5c88;
+        }
+
+        @media (max-width: 900px) {
+            .summary,
+            .charts {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="shell">
+    <header class="topbar">
+        <div class="brand">
+            Battery Swap Admin
+            <span>Codes, purchases, validity, and performance</span>
+        </div>
+        <a class="nav-link" href="{% url 'reservation' %}">Reservation Page</a>
+    </header>
+
+    <main class="main">
+        <section class="summary">
+            <div class="metric">
+                <span>Total Purchases</span>
+                <strong>{{ total_reservations }}</strong>
+            </div>
+            <div class="metric">
+                <span>Total Revenue</span>
+                <strong>{{ total_revenue }} UGX</strong>
+            </div>
+            <div class="metric">
+                <span>Valid Codes</span>
+                <strong>{{ valid_count }}</strong>
+            </div>
+            <div class="metric">
+                <span>Expired/Cancelled</span>
+                <strong>{{ expired_count }}</strong>
+            </div>
+        </section>
+
+        <section class="charts">
+            <div class="panel">
+                <h2>Purchases Over Time</h2>
+                <div class="chart-box">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-stack">
+                <div class="panel">
+                    <h2>Status Breakdown</h2>
+                    <div class="chart-box">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+                <div class="panel">
+                    <h2>Code Validity</h2>
+                    <div class="chart-box">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Reservation Codes</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Person Name</th>
+                        <th>Code</th>
+                        <th>Purchase Date</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Validity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.user_name }}</td>
+                            <td class="code">{{ reservation.code }}</td>
+                            <td>{{ reservation.date }}</td>
+                            <td>{{ reservation.price }} UGX</td>
+                            <td><span class="pill status">{{ reservation.status|title }}</span></td>
+                            <td>
+                                {% if reservation.status != "cancelled" and reservation.date >= today %}
+                                    <span class="pill valid">Valid</span>
+                                {% else %}
+                                    <span class="pill expired">Expired/Cancelled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6">No reservations have been created yet.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+{{ daily_labels|json_script:"daily-labels" }}
+{{ daily_values|json_script:"daily-values" }}
+{{ status_labels|json_script:"status-labels" }}
+{{ status_values|json_script:"status-values" }}
+{{ validity_labels|json_script:"validity-labels" }}
+{{ validity_values|json_script:"validity-values" }}
+
+<script>
+    const palette = {
+        green: '#078a3f',
+        lime: '#8bd450',
+        amber: '#f5b942',
+        blue: '#2f80c0',
+        red: '#e15a46',
+        grid: '#dfece4'
+    };
+
+    const readJson = (id) => JSON.parse(document.getElementById(id).textContent);
+    const dailyLabels = readJson('daily-labels');
+    const dailyValues = readJson('daily-values');
+    const statusLabels = readJson('status-labels');
+    const statusValues = readJson('status-values');
+    const validityLabels = readJson('validity-labels');
+    const validityValues = readJson('validity-values');
+
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: dailyLabels,
+            datasets: [{
+                label: 'Purchases',
+                data: dailyValues,
+                borderColor: palette.green,
+                backgroundColor: 'rgba(7, 138, 63, 0.12)',
+                fill: true,
+                tension: 0.35
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: palette.grid } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                label: 'Reservations',
+                data: statusValues,
+                backgroundColor: [palette.green, palette.amber, palette.red, palette.blue]
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: palette.grid } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('pieChart'), {
+        type: 'doughnut',
+        data: {
+            labels: validityLabels,
+            datasets: [{
+                data: validityValues,
+                backgroundColor: [palette.green, palette.amber]
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            cutout: '58%'
+        }
+    });
+</script>
+</body>
+</html>

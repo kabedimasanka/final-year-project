@@ -1,14 +1,55 @@
-{% extends 'base.html '%}
+{% extends 'base.html' %}
 {% block content %}
-{% load static %}
-<h1>BatteryOption</h1>
-<div class="column">
-    {% for item in battery_menu %}
-    <p>
-        <a href="{% url 'battery_menu' pk=item.pk%}">{{item.name}} </a>
-        <span class="battery_menu-price">{{item.price}}.00</span>
-    </p>
-    {% endfor %}
-</div>
-{% endblock %}
+<main class="list-page">
+    <h1>Battery Options</h1>
+    <div class="list">
+        {% for item in battery_menu %}
+            <div class="list-row">
+                <a href="{% url 'battery_menu' pk=item.pk %}">{{ item.name }}</a>
+                <strong>{{ item.price }} UGX</strong>
+            </div>
+        {% empty %}
+            <div class="list-row">No battery options available.</div>
+        {% endfor %}
+    </div>
+</main>
+
+<style>
+    .list-page {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 48px 24px;
+    }
+
+    h1 {
+        color: #063f2a;
+        margin-bottom: 20px;
+    }
+
+    .list {
+        display: grid;
+        gap: 12px;
+    }
+
+    .list-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        background: white;
+        border: 1px solid #d8eadf;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 12px 28px rgba(7, 74, 39, 0.08);
+    }
+
+    .list-row a {
+        color: #063f2a;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .list-row strong {
+        color: #078a3f;
+    }
+</style>
 {% endblock %}

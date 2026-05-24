@@ -1,162 +1,362 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="hero">
-
-    <!-- CENTER TITLE -->
-    <div class="center-title">
-        <div class="tag">⚡ ENERGY MOBILITY PLATFORM</div>
-
-        <h1>Electric Bike Battery Swapping System</h1>
-
-        <p>
-            Instant energy exchange for modern electric mobility — fast, smart, and reliable.
-        </p>
-
-        <a href="{% url 'signup' %}" class="btn">Get Started</a>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="content">
-
-        <!-- LEFT -->
-        <div class="left">
-            <h2>Why Choose Us?</h2>
-
-            <div class="card">
-                <h3>⚡ Ultra-Fast</h3>
-                <p>Swap battery in seconds.</p>
-            </div>
-
-            <div class="card">
-                <h3>📍 Smart Network</h3>
-                <p>Find stations easily.</p>
-            </div>
-
-            <div class="card">
-                <h3>🔒 Secure</h3>
-                <p>Safe automated system.</p>
+<main class="home-page">
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow">Energy mobility platform</span>
+            <h1>Electric bike battery swaps without the charging wait.</h1>
+            <p>
+                Reserve a battery, receive a secure swap code, and keep moving with fast
+                energy exchange built for daily riders.
+            </p>
+            <div class="actions">
+                <a href="{% url 'signup' %}" class="btn-primary">Get Started</a>
+                <a href="{% url 'reservation' %}" class="btn-secondary">Reserve Battery</a>
             </div>
         </div>
 
-        <!-- RIGHT -->
-        <div class="right">
-            <h2>Ride Without Limits</h2>
+        <div class="energy-panel">
+            <div class="swap-visual" aria-label="Low battery swaps into full battery">
+                <div class="battery-icon low">
+                    <div class="battery-shell">
+                        <span></span>
+                    </div>
+                    <strong>Low</strong>
+                </div>
 
-            <p>
-                No charging delays. Just swap and go instantly.
-            </p>
+                <div class="exchange-icon">
+                    <span class="arrow top"></span>
+                    <span class="arrow bottom"></span>
+                </div>
 
-            <p>
-                Designed for modern electric mobility with reliability and speed.
-            </p>
+                <div class="battery-icon full">
+                    <div class="battery-shell">
+                        <span></span>
+                    </div>
+                    <strong>Full</strong>
+                </div>
+            </div>
+            <div class="panel-stat">
+                <strong>5000 UGX</strong>
+                <span>Fixed swap price</span>
+            </div>
+            <div class="panel-grid">
+                <div>
+                    <strong>Fast</strong>
+                    <span>Code access</span>
+                </div>
+                <div>
+                    <strong>Secure</strong>
+                    <span>Verified swaps</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-    </div>
-
-</div>
+    <section class="feature-band">
+        <article>
+            <span>01</span>
+            <h2>Reserve</h2>
+            <p>Choose your swap date and create a reservation in seconds.</p>
+        </article>
+        <article>
+            <span>02</span>
+            <h2>Get Code</h2>
+            <p>Your unique code connects the purchase to your name and reservation.</p>
+        </article>
+        <article>
+            <span>03</span>
+            <h2>Swap</h2>
+            <p>Use the code at the station to collect your ready battery.</p>
+        </article>
+    </section>
+</main>
 
 <style>
+    .home-page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 54px 24px;
+    }
 
-/* SAFE PAGE (NO CUT CONTENT) */
-html, body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #111;
-}
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.8fr);
+        gap: 34px;
+        align-items: center;
+        min-height: calc(100vh - 190px);
+    }
 
-/* MAIN LAYOUT */
-.hero {
-    min-height: 100vh;
-    padding: 40px 60px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
+    .eyebrow {
+        color: #078a3f;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
 
-/* CENTER TITLE */
-.center-title {
-    text-align: center;
-}
+    .hero h1 {
+        max-width: 760px;
+        margin: 12px 0 16px;
+        color: #063f2a;
+        font-size: clamp(34px, 6vw, 68px);
+        line-height: 1.02;
+    }
 
-.tag {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #666;
-}
+    .hero p {
+        max-width: 620px;
+        color: #53665c;
+        font-size: 17px;
+        line-height: 1.7;
+    }
 
-.center-title h1 {
-    font-size: 44px;
-    margin: 10px 0;
-}
+    .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+    }
 
-.center-title p {
-    font-size: 16px;
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
-}
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 11px 20px;
+        border: 1px solid #b7d8c3;
+        border-radius: 8px;
+        color: #063f2a;
+        font-weight: 800;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.72);
+    }
 
-/* BUTTON */
-.btn {
-    display: inline-block;
-    padding: 12px 26px;
-    background: #111;
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-}
+    .energy-panel {
+        background: #ffffff;
+        border: 1px solid #d8eadf;
+        border-radius: 8px;
+        box-shadow: 0 22px 50px rgba(7, 74, 39, 0.12);
+        padding: 28px;
+    }
 
-/* CONTENT */
-.content {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-}
+    .swap-visual {
+        display: grid;
+        grid-template-columns: 1fr 86px 1fr;
+        align-items: center;
+        gap: 14px;
+        min-height: 190px;
+        padding: 18px;
+        background: #f5fbf6;
+        border: 1px solid #d8eadf;
+        border-radius: 8px;
+    }
 
-/* LEFT + RIGHT */
-.left, .right {
-    flex: 1;
-}
+    .battery-icon {
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+    }
 
-/* HEADINGS */
-.left h2, .right h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-}
+    .battery-shell {
+        position: relative;
+        width: 92px;
+        height: 138px;
+        border: 7px solid #063f2a;
+        border-radius: 15px;
+        background: #ffffff;
+        overflow: hidden;
+        box-shadow: inset 0 0 0 4px rgba(6, 63, 42, 0.05);
+    }
 
-/* CARD */
-.card {
-    background: white;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
+    .battery-shell::before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 28px;
+        width: 28px;
+        height: 11px;
+        background: #063f2a;
+        border-radius: 6px 6px 0 0;
+    }
 
-.card h3 {
-    font-size: 16px;
-    margin: 0 0 5px 0;
-}
+    .battery-shell span {
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        border-radius: 8px;
+    }
 
-.card p {
-    font-size: 13px;
-    color: #666;
-    margin: 0;
-}
+    .battery-icon.low .battery-shell span {
+        height: 22%;
+        background: #ffc857;
+        animation: lowPulse 1.7s ease-in-out infinite;
+    }
 
-/* RIGHT TEXT */
-.right p {
-    font-size: 15px;
-    color: #555;
-    margin-bottom: 12px;
-    line-height: 1.5;
-}
+    .battery-icon.full .battery-shell span {
+        height: 86%;
+        background: linear-gradient(180deg, #b8f05a 0%, #078a3f 100%);
+        animation: chargeGlow 1.8s ease-in-out infinite;
+    }
 
+    .battery-icon strong {
+        color: #063f2a;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .exchange-icon {
+        position: relative;
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background: #063f2a;
+        box-shadow: 0 14px 30px rgba(7, 74, 39, 0.18);
+        animation: exchangeFloat 2.4s ease-in-out infinite;
+    }
+
+    .exchange-icon::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 2px solid rgba(184, 240, 90, 0.55);
+        border-radius: 50%;
+    }
+
+    .arrow {
+        position: absolute;
+        left: 19px;
+        width: 47px;
+        height: 4px;
+        background: #b8f05a;
+        border-radius: 999px;
+    }
+
+    .arrow::after {
+        content: "";
+        position: absolute;
+        top: -5px;
+        width: 12px;
+        height: 12px;
+        border-top: 4px solid #b8f05a;
+        border-right: 4px solid #b8f05a;
+    }
+
+    .arrow.top {
+        top: 30px;
+    }
+
+    .arrow.top::after {
+        right: -1px;
+        transform: rotate(45deg);
+    }
+
+    .arrow.bottom {
+        bottom: 30px;
+        transform: rotate(180deg);
+    }
+
+    .arrow.bottom::after {
+        right: -1px;
+        transform: rotate(45deg);
+    }
+
+    @keyframes lowPulse {
+        0%,
+        100% {
+            opacity: 0.66;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes chargeGlow {
+        0%,
+        100% {
+            box-shadow: 0 0 0 rgba(184, 240, 90, 0);
+        }
+        50% {
+            box-shadow: 0 0 18px rgba(184, 240, 90, 0.65);
+        }
+    }
+
+    @keyframes exchangeFloat {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    .panel-stat {
+        margin: 22px 0;
+    }
+
+    .panel-stat strong {
+        display: block;
+        color: #078a3f;
+        font-size: 34px;
+    }
+
+    .panel-stat span,
+    .panel-grid span {
+        color: #617268;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .panel-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .panel-grid div,
+    .feature-band article {
+        background: #f5fbf6;
+        border: 1px solid #d8eadf;
+        border-radius: 8px;
+        padding: 16px;
+    }
+
+    .panel-grid strong {
+        display: block;
+        color: #063f2a;
+    }
+
+    .feature-band {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .feature-band span {
+        color: #078a3f;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .feature-band h2 {
+        margin: 8px 0;
+        color: #063f2a;
+        font-size: 20px;
+    }
+
+    .feature-band p {
+        color: #5a6b62;
+        margin: 0;
+        line-height: 1.55;
+    }
+
+    @media (max-width: 860px) {
+        .hero,
+        .feature-band {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
-
 {% endblock %}

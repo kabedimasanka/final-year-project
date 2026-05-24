@@ -1,23 +1,78 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Station Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(184, 240, 90, 0.22), transparent 32%),
+                linear-gradient(135deg, #f8fff4 0%, #eef8f1 52%, #f7fbff 100%);
+            color: #102018;
+        }
+
+        .map-page {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 38px 24px;
+        }
+
+        h1 {
+            color: #063f2a;
+            margin: 0 0 8px;
+        }
+
+        p {
+            color: #5a6b62;
+            margin: 0 0 22px;
+        }
+
+        #map {
+            height: 620px;
+            border: 1px solid #d8eadf;
+            border-radius: 8px;
+            box-shadow: 0 22px 50px rgba(7, 74, 39, 0.12);
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<main class="map-page">
+    <h1>Nearby Battery Station</h1>
+    <p>Find the swap point for your reserved battery.</p>
+    <div id="map"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     const lat = 0.3238;
     const lng = 32.6015;
-
-    var map = L.map('map').setView([lat, lng], 16);
+    const map = L.map('map').setView([lat, lng], 16);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
 
-    var marker = L.marker([lat, lng]).addTo(map);
-
     const imageUrl = "{% static 'images/my_map_picture.jpg' %}";
-
-    marker.bindPopup(`
-        <b>ISBAT University</b><br>
+    L.marker([lat, lng]).addTo(map).bindPopup(`
+        <strong>ISBAT University</strong><br>
         Main Campus, Kampala.<br>
-        <img src="${imageUrl}" style="width:150px; height:auto; margin-top:5px;">
+        <img src="${imageUrl}" style="width:150px; height:auto; margin-top:8px; border-radius:8px;">
     `).openPopup();
 </script>
+</body>
+</html>
