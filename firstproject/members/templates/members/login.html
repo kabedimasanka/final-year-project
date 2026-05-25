@@ -4,12 +4,12 @@
 <main class="auth-page">
     <section class="auth-info">
         <span>Secure access</span>
-        <h1>Sign in to manage your battery swap journey.</h1>
-        <p>Access reservations, swap codes, and station information from one clean energy portal.</p>
+        <h1>{{ login_title|default:"Sign in to manage your battery swap journey." }}</h1>
+        <p>{{ login_intro|default:"Access reservations, swap codes, and station information from one clean energy portal." }}</p>
     </section>
 
     <section class="auth-card">
-        <h2>Account Login</h2>
+        <h2>{{ login_title|default:"Account Login" }}</h2>
 
         <form method="POST">
             {% csrf_token %}

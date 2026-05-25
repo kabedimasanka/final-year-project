@@ -16,12 +16,8 @@
         body {
             margin: 0;
             font-family: 'Poppins', Arial, sans-serif;
-            background: #f3f8f4;
+            background: #f5f7f6;
             color: #13231a;
-        }
-
-        .shell {
-            min-height: 100vh;
         }
 
         .topbar {
@@ -47,18 +43,45 @@
             text-transform: uppercase;
         }
 
-        .nav-link {
-            color: #ffffff;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.35);
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link,
+        .button {
+            border: 0;
             border-radius: 8px;
-            padding: 9px 14px;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font: inherit;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
+            min-height: 40px;
+            padding: 9px 14px;
+            text-decoration: none;
+        }
+
+        .nav-link {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .button {
+            background: #078a3f;
+        }
+
+        .button.secondary {
+            background: #eef4f0;
+            color: #143323;
         }
 
         .main {
-            max-width: 1180px;
+            max-width: 1240px;
             margin: 0 auto;
             padding: 28px;
         }
@@ -66,26 +89,26 @@
         .summary {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
+            gap: 14px;
             margin-bottom: 18px;
         }
 
         .metric,
         .panel {
             background: #ffffff;
-            border: 1px solid #d8eadf;
+            border: 1px solid #d9e7df;
             border-radius: 8px;
-            box-shadow: 0 14px 30px rgba(9, 61, 32, 0.08);
+            box-shadow: 0 12px 26px rgba(9, 61, 32, 0.07);
         }
 
         .metric {
-            padding: 18px;
+            padding: 17px;
         }
 
         .metric span {
+            color: #65756b;
             display: block;
-            color: #607267;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -93,8 +116,44 @@
         .metric strong {
             color: #083b24;
             display: block;
-            font-size: 28px;
-            margin-top: 6px;
+            font-size: 26px;
+            margin-top: 5px;
+        }
+
+        .metric small {
+            color: #6d7b72;
+            display: block;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .filters {
+            align-items: end;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1.4fr 0.8fr 0.8fr auto auto;
+            margin-bottom: 18px;
+            padding: 16px;
+        }
+
+        label {
+            color: #56675d;
+            display: grid;
+            font-size: 12px;
+            font-weight: 800;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        input,
+        select {
+            border: 1px solid #cbded3;
+            border-radius: 8px;
+            color: #13231a;
+            font: inherit;
+            min-height: 42px;
+            padding: 10px 12px;
+            width: 100%;
         }
 
         .charts {
@@ -104,7 +163,8 @@
             margin-bottom: 18px;
         }
 
-        .chart-stack {
+        .chart-stack,
+        .insights {
             display: grid;
             gap: 18px;
         }
@@ -123,22 +183,59 @@
             height: 300px;
         }
 
+        .insights {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 18px;
+        }
+
+        .mini-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .mini-row {
+            align-items: center;
+            border-bottom: 1px solid #e6eee9;
+            display: grid;
+            gap: 8px;
+            grid-template-columns: 1fr auto;
+            padding: 9px 0;
+        }
+
+        .mini-row:last-child {
+            border-bottom: 0;
+        }
+
+        .mini-row strong {
+            color: #173524;
+            display: block;
+            font-size: 14px;
+        }
+
+        .mini-row span {
+            color: #68786e;
+            display: block;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
         .table-wrap {
             overflow-x: auto;
         }
 
         table {
-            width: 100%;
             border-collapse: collapse;
-            min-width: 760px;
+            min-width: 880px;
+            width: 100%;
         }
 
         th,
         td {
-            padding: 12px 10px;
             border-bottom: 1px solid #e2eee7;
-            text-align: left;
             font-size: 14px;
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: middle;
         }
 
         th {
@@ -154,11 +251,12 @@
         }
 
         .pill {
-            display: inline-block;
             border-radius: 999px;
-            padding: 5px 10px;
+            display: inline-block;
             font-size: 12px;
             font-weight: 800;
+            padding: 5px 10px;
+            white-space: nowrap;
         }
 
         .valid {
@@ -171,14 +269,21 @@
             color: #9b5a00;
         }
 
+        .cancelled {
+            background: #ffe9e5;
+            color: #b43726;
+        }
+
         .status {
             background: #edf6ff;
             color: #1e5c88;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 980px) {
             .summary,
-            .charts {
+            .charts,
+            .insights,
+            .filters {
                 grid-template-columns: 1fr;
             }
 
@@ -194,9 +299,13 @@
     <header class="topbar">
         <div class="brand">
             Battery Swap Admin
-            <span>Codes, purchases, validity, and performance</span>
+            <span>Codes, purchases, revenue, and station readiness</span>
         </div>
-        <a class="nav-link" href="{% url 'reservation' %}">Reservation Page</a>
+        <div class="actions">
+            <a class="nav-link" href="{% url 'reservation' %}">Reservation Page</a>
+            <a class="nav-link" href="{% url 'admin:index' %}">Django Admin</a>
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </div>
     </header>
 
     <main class="main">
@@ -204,24 +313,75 @@
             <div class="metric">
                 <span>Total Purchases</span>
                 <strong>{{ total_reservations }}</strong>
+                <small>{{ purchases_this_week }} this week</small>
             </div>
             <div class="metric">
                 <span>Total Revenue</span>
                 <strong>{{ total_revenue }} UGX</strong>
+                <small>{{ revenue_this_week }} UGX this week</small>
             </div>
             <div class="metric">
-                <span>Valid Codes</span>
+                <span>Active Codes</span>
                 <strong>{{ valid_count }}</strong>
+                <small>{{ expiring_soon_count }} due today/tomorrow</small>
             </div>
             <div class="metric">
-                <span>Expired/Cancelled</span>
+                <span>Expired Codes</span>
                 <strong>{{ expired_count }}</strong>
+                <small>{{ cancelled_count }} cancelled</small>
+            </div>
+            <div class="metric">
+                <span>Pending</span>
+                <strong>{{ pending_count }}</strong>
+                <small>Need confirmation</small>
+            </div>
+            <div class="metric">
+                <span>Today</span>
+                <strong>{{ today_count }}</strong>
+                <small>Reservations due</small>
+            </div>
+            <div class="metric">
+                <span>Upcoming</span>
+                <strong>{{ upcoming_count }}</strong>
+                <small>Future active swaps</small>
+            </div>
+            <div class="metric">
+                <span>Filtered Rows</span>
+                <strong>{{ reservations|length }}</strong>
+                <small>Matching the table filters</small>
             </div>
         </section>
 
+        <form class="panel filters" method="get">
+            <label>
+                Search
+                <input type="search" name="q" placeholder="Name or code" value="{{ search_query }}">
+            </label>
+            <label>
+                Status
+                <select name="status">
+                    <option value="">All statuses</option>
+                    <option value="reserved" {% if status_filter == "reserved" %}selected{% endif %}>Reserved</option>
+                    <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Pending</option>
+                    <option value="cancelled" {% if status_filter == "cancelled" %}selected{% endif %}>Cancelled</option>
+                </select>
+            </label>
+            <label>
+                Validity
+                <select name="validity">
+                    <option value="">All codes</option>
+                    <option value="active" {% if validity_filter == "active" %}selected{% endif %}>Active</option>
+                    <option value="expired" {% if validity_filter == "expired" %}selected{% endif %}>Expired</option>
+                    <option value="cancelled" {% if validity_filter == "cancelled" %}selected{% endif %}>Cancelled</option>
+                </select>
+            </label>
+            <button class="button" type="submit">Apply</button>
+            <a class="button secondary" href="{% url 'admin_dashboard' %}">Reset</a>
+        </form>
+
         <section class="charts">
             <div class="panel">
-                <h2>Purchases Over Time</h2>
+                <h2>Purchases Last 7 Days</h2>
                 <div class="chart-box">
                     <canvas id="lineChart"></canvas>
                 </div>
@@ -243,6 +403,81 @@
             </div>
         </section>
 
+        <section class="charts">
+            <div class="panel">
+                <h2>Revenue Last 7 Days</h2>
+                <div class="chart-box">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Quick Read</h2>
+                <div class="mini-list">
+                    <div class="mini-row">
+                        <div>
+                            <strong>{{ today_count }} reservations due today</strong>
+                            <span>These are the codes most likely to be used immediately.</span>
+                        </div>
+                        <span class="pill valid">Today</span>
+                    </div>
+                    <div class="mini-row">
+                        <div>
+                            <strong>{{ expiring_soon_count }} codes due soon</strong>
+                            <span>Includes today and tomorrow, excluding cancelled reservations.</span>
+                        </div>
+                        <span class="pill expired">Soon</span>
+                    </div>
+                    <div class="mini-row">
+                        <div>
+                            <strong>{{ pending_count }} pending reservations</strong>
+                            <span>Useful for follow-up before the customer arrives.</span>
+                        </div>
+                        <span class="pill status">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="insights">
+            <div class="panel">
+                <h2>Recent Purchases</h2>
+                <div class="mini-list">
+                    {% for reservation in recent_reservations %}
+                        <div class="mini-row">
+                            <div>
+                                <strong>{{ reservation.user_name }}</strong>
+                                <span>{{ reservation.created_at|date:"M d, Y H:i" }} · {{ reservation.price }} UGX</span>
+                            </div>
+                            <span class="code">{{ reservation.code }}</span>
+                        </div>
+                    {% empty %}
+                        <div class="mini-row">
+                            <strong>No purchases yet.</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Upcoming Reservations</h2>
+                <div class="mini-list">
+                    {% for reservation in upcoming_reservations %}
+                        <div class="mini-row">
+                            <div>
+                                <strong>{{ reservation.user_name }}</strong>
+                                <span>{{ reservation.date }} · {{ reservation.status|title }}</span>
+                            </div>
+                            <span class="code">{{ reservation.code }}</span>
+                        </div>
+                    {% empty %}
+                        <div class="mini-row">
+                            <strong>No upcoming reservations.</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
         <section class="panel">
             <h2>Reservation Codes</h2>
             <div class="table-wrap">
@@ -251,7 +486,8 @@
                     <tr>
                         <th>Person Name</th>
                         <th>Code</th>
-                        <th>Purchase Date</th>
+                        <th>Purchase Time</th>
+                        <th>Reservation Date</th>
                         <th>Price</th>
                         <th>Status</th>
                         <th>Validity</th>
@@ -262,20 +498,23 @@
                         <tr>
                             <td>{{ reservation.user_name }}</td>
                             <td class="code">{{ reservation.code }}</td>
+                            <td>{{ reservation.created_at|date:"M d, Y H:i" }}</td>
                             <td>{{ reservation.date }}</td>
                             <td>{{ reservation.price }} UGX</td>
                             <td><span class="pill status">{{ reservation.status|title }}</span></td>
                             <td>
-                                {% if reservation.status != "cancelled" and reservation.date >= today %}
-                                    <span class="pill valid">Valid</span>
+                                {% if reservation.status == "cancelled" %}
+                                    <span class="pill cancelled">Cancelled</span>
+                                {% elif reservation.date >= today %}
+                                    <span class="pill valid">Active</span>
                                 {% else %}
-                                    <span class="pill expired">Expired/Cancelled</span>
+                                    <span class="pill expired">Expired</span>
                                 {% endif %}
                             </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="6">No reservations have been created yet.</td>
+                            <td colspan="7">No reservations match the current filters.</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -287,6 +526,7 @@
 
 {{ daily_labels|json_script:"daily-labels" }}
 {{ daily_values|json_script:"daily-values" }}
+{{ daily_revenue_values|json_script:"daily-revenue-values" }}
 {{ status_labels|json_script:"status-labels" }}
 {{ status_values|json_script:"status-values" }}
 {{ validity_labels|json_script:"validity-labels" }}
@@ -305,6 +545,7 @@
     const readJson = (id) => JSON.parse(document.getElementById(id).textContent);
     const dailyLabels = readJson('daily-labels');
     const dailyValues = readJson('daily-values');
+    const dailyRevenueValues = readJson('daily-revenue-values');
     const statusLabels = readJson('status-labels');
     const statusValues = readJson('status-values');
     const validityLabels = readJson('validity-labels');
@@ -328,6 +569,26 @@
             plugins: { legend: { display: false } },
             scales: {
                 y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: palette.grid } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels: dailyLabels,
+            datasets: [{
+                label: 'Revenue',
+                data: dailyRevenueValues,
+                backgroundColor: palette.blue
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: palette.grid } },
                 x: { grid: { display: false } }
             }
         }
@@ -359,7 +620,7 @@
             labels: validityLabels,
             datasets: [{
                 data: validityValues,
-                backgroundColor: [palette.green, palette.amber]
+                backgroundColor: [palette.green, palette.amber, palette.red]
             }]
         },
         options: {

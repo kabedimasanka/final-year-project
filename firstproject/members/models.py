@@ -14,8 +14,9 @@ class Reservation(models.Model):
     date = models.DateField()
     price = models.IntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-
     code = models.CharField(max_length=10, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.code:
