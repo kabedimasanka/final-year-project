@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
     <style>
         * {
@@ -158,10 +159,12 @@
             margin-top: 24px;
         }
 
-        .map-box img {
+        #stationMap {
             width: 100%;
+            height: 320px;
             border-radius: 8px;
             border: 1px solid #d8eadf;
+            overflow: hidden;
         }
 
         .location-title {
@@ -211,8 +214,8 @@
             <button class="btn" onclick="showMap()">View Nearby Station</button>
 
             <div class="map-box" id="mapBox">
-                <div class="location-title">Nearest battery swap station</div>
-                <img src="{% static 'images/my_map_picture.jpg' %}" alt="Station Map">
+                <div class="location-title">Nearby battery swap stations</div>
+                <div id="stationMap"></div>
             </div>
         </div>
     </div>
@@ -222,9 +225,63 @@
     </div>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+    let stationMap;
+
+    const stations = [
+        {
+            name: 'ISBAT University',
+            description: 'Main Campus, Kampala',
+            lat: 0.334444,
+            lng: 32.601389
+        },
+        {
+            name: 'Acacia Mall',
+            description: 'Battery swap point near Acacia Mall',
+            lat: 0.3382764720220686,
+            lng: 32.586334446270236
+        },
+        {
+            name: 'Mapera House',
+            description: 'Battery swap point near Mapera House',
+            lat: 0.3145754724601944,
+            lng: 32.57838093779839
+        }
+    ];
+
+    function initializeStationMap() {
+        if (stationMap) {
+            stationMap.invalidateSize();
+            return;
+        }
+
+        stationMap = L.map('stationMap').setView([0.329, 32.589], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(stationMap);
+
+        const bounds = [];
+
+        stations.forEach((station) => {
+            const position = [station.lat, station.lng];
+            bounds.push(position);
+
+            L.marker(position).addTo(stationMap).bindPopup(`
+                <strong>${station.name}</strong><br>
+                ${station.description}<br>
+                <small>${station.lat}, ${station.lng}</small>
+            `);
+        });
+
+        stationMap.fitBounds(bounds, { padding: [25, 25] });
+    }
+
     function showMap() {
         document.getElementById("mapBox").style.display = "block";
+        initializeStationMap();
     }
 </script>
 </body>

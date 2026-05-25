@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,28 +50,62 @@
 </head>
 <body>
 <main class="map-page">
-    <h1>Nearby Battery Station</h1>
-    <p>Find the swap point for your reserved battery.</p>
+    <h1>Nearby Battery Stations</h1>
+    <p>Find a predefined swap point for your reserved battery.</p>
     <div id="map"></div>
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    const lat = 0.3238;
-    const lng = 32.6015;
-    const map = L.map('map').setView([lat, lng], 16);
+    const stations = [
+        {
+            name: 'ISBAT University',
+            description: 'Main Campus, Kampala',
+            lat: 0.334444,
+            lng: 32.601389
+        },
+        {
+            name: 'Acacia Mall',
+            description: 'Battery swap point near Acacia Mall',
+            lat: 0.3382764720220686,
+            lng: 32.586334446270236
+        },
+        {
+            name: 'Mapera House',
+            description: 'Battery swap point near Mapera House',
+            lat: 0.3145754724601944,
+            lng: 32.57838093779839
+        }
+    ];
+
+    const map = L.map('map').setView([0.329, 32.589], 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
 
-    const imageUrl = "{% static 'images/my_map_picture.jpg' %}";
-    L.marker([lat, lng]).addTo(map).bindPopup(`
-        <strong>ISBAT University</strong><br>
-        Main Campus, Kampala.<br>
-        <img src="${imageUrl}" style="width:150px; height:auto; margin-top:8px; border-radius:8px;">
-    `).openPopup();
+    const bounds = [];
+
+    stations.forEach((station, index) => {
+        const position = [station.lat, station.lng];
+        bounds.push(position);
+
+        L.marker(position).addTo(map).bindPopup(`
+            <strong>${station.name}</strong><br>
+            ${station.description}<br>
+            <small>${station.lat}, ${station.lng}</small>
+        `);
+
+        if (index === 0) {
+            L.popup()
+                .setLatLng(position)
+                .setContent(`<strong>${station.name}</strong><br>${station.description}`)
+                .openOn(map);
+        }
+    });
+
+    map.fitBounds(bounds, { padding: [35, 35] });
 </script>
 </body>
 </html>
